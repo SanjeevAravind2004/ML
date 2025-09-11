@@ -277,41 +277,34 @@ for i, size in enumerate(np.bincount(y_kmeans)): # Iterate over the sizes of eac
 print(f"Cluster (i+1): (size)") # Print the size of each cluster
 
 PROGRAM 5:
-import pandas as pd # Import the pandas library for data manipulation
-from sklearn.model selection import train test split Import function to split data into training and testing sets
-from sklearn.preprocessing import StandardScaler # Import StandardScaler to standardize features
-from sklearn.xvm import SVC #Import Support Vector Classifier for SVM modeling
-from sklearn, metrics import confusion_matrix, accuracy_score, precision_score, rocall_score, fl score Import various metrics to evaluate the model
-#Lead the dataset
-datupd.read_csv('winequality_red.csv') # Read the dataset from a CSV file into a DataFrame
-#Display the details of the dataset
-print(data.info()) # Print summary information about the DataFrame, including the data types and non-null counts of each column
-#Features and target variable
-X-data.drop('quality', axis-1) #Drop the 'quality' column to create the feature set (X) which contains all columns except 'quality'
-y=data['quality #Create the target variable (y) which contains only the 'quality' column
-#Preprocessing: Standardize the features
-scaler StandardScaler() #Create an instance of Standard Scaler
-X scaled scaler fit transform(X) Fit the scaler to the feature data and transform it, standardizing the features
-#Split the data into training and testing sets
-X_train, X_test, y_train, y_test-train_test_split(X_scaled, y, test size-0.3, random state-42)
-model=SVC(kernel-rbf, gamma scale, C-1.0, class weight-balanced, probability True) # Create an instance of SVC with radial basis function kernel, automatic gamma scaling, regularization parameter C set to 1.0, balanced class weights, and probability estimates enabled
-model.fit(X train, y train) # Train the SVM model using the training data
-#Make predictions on the test set
-y pred model.predict(X_test) # Use the trained model to predict the labels for the test set
-Calculate and print accuracy
-accuracy accuracy_score(y_test, y pred) #Calculate the accuracy of the predictions
-print(finAccuracy: (accuracy: 4f)") # Print the accuracy with 4 decimal places
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score, f1_score
+data = pd.read_csv('winequality_red.csv')
+X = data.drop('quality', axis=1)
+y = data['quality']
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.3, random_state=42)
+model = SVC(kernel='rbf', gamma='scale', C=1.0, class_weight='balanced', probability=True)
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print(f"\nAccuracy: {accuracy:.4f}")
 print("\nConfusion Matrix:")
-print(cm) Print the confusion matrix
-precision precision_score(y_test, y pred, average None) # Calculate precision scores for each class, without averaging
-recall recall scorely test, y pred, average None) Calculate recall scores for each class, without averaging
-fl=fl_score(y test, y pred, average=None) # Calculate FI scores for cach class, without averaging
-print("\nPrecision for cach class:")
-for i, p in enumerate(precision); # Iterate through each class's precision score
-print(f"Class (i): (p.4f)") # Print the precision score for cach class with 4 decimal places
-print("aRecall for each class:")
-for i, r in enumerate(recall): # Iterate through each class's recall score
-print(f"Class (i): (c.4f)") #Print the recall score for each class with 4 decimal places
-print("aF1 Score for each class:")
-for i, f' in enumerate(): # Iterate through each class's F1 score
-print(f"Class (i): (f4f)") # Print the F1 score for each class with 4 decimal places
+cm = confusion_matrix(y_test, y_pred)
+print(cm)
+precision = precision_score(y_test, y_pred, average=None)
+recall = recall_score(y_test, y_pred, average=None)
+f1 = f1_score(y_test, y_pred, average=None)
+print("\nPrecision for each class:")
+for i, p in enumerate(precision):
+    print(f"Class {i}: {p:.4f}")
+print("\nRecall for each class:")
+for i, r in enumerate(recall):
+    print(f"Class {i}: {r:.4f}")
+print("\nF1 Score for each class:")
+for i, f in enumerate(f1):
+    print(f"Class {i}: {f:.4f}")
